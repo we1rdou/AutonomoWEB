@@ -6,7 +6,7 @@ class Mesa(models.Model):
     ubicacion = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"Mesa {self.idMesa} - {self.ubicacion} (Capacidad: {self.capacidad})"
+        return f"Mesa {self.id} - {self.ubicacion} (Capacidad: {self.capacidad})"
 
 class Empleado(models.Model):
     nombre = models.CharField(max_length=50)
@@ -16,7 +16,7 @@ class Empleado(models.Model):
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
-    
+
 class Cliente(models.Model):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
@@ -25,18 +25,18 @@ class Cliente(models.Model):
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
-    
+
 class Pedido(models.Model):
-    Empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
-    Cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    Mesa = models.ForeignKey(Mesa, on_delete=models.CASCADE)
+    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    mesa = models.ForeignKey(Mesa, on_delete=models.CASCADE)
     estado = models.CharField(max_length=50)
 
     def __str__(self):
-        return f"Pedido {self.idPedido} - Estado: {self.estado}"  
+        return f"Pedido {self.id} - Estado: {self.estado}"
 
 class Plato(models.Model):
-    Pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True, null=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
@@ -44,4 +44,4 @@ class Plato(models.Model):
     disponibilidad = models.BooleanField()
 
     def __str__(self):
-        return self.nombre      
+        return self.nombre
